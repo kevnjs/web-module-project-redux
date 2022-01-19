@@ -6,23 +6,27 @@ import { Link, useHistory } from 'react-router-dom';
 
 const AddMovieForm = (props) => {
     const { push } = useHistory();
-
     const [movie, setMovie] = useState({
         title: "",
         director: "",
         genre: "",
         metascore: 0,
-        description:""
-    });
+        description:"",
+    }); 
 
     const handleChange = (e) => {
         setMovie({
             ...movie,
-            [e.target.name]: e.target.value
+            [e.target.name]: e.target.value,
+            id: Math.floor(Math.random()* 1000)
         });
     }
 
     const handleSubmit = (e) => {
+        e.preventDefault();
+        props.dispatch(addMovie(movie))
+        console.log(movie)
+        push("/movies")
     }
 
     const { title, director, genre, metascore, description } = movie;
@@ -67,4 +71,4 @@ const AddMovieForm = (props) => {
     </div>);
 }
 
-export default AddMovieForm;
+export default connect()(AddMovieForm);
